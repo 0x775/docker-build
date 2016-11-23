@@ -31,7 +31,7 @@ RUN apt-get install -y --no-install-recommends \
 
 # Set environments
 RUN set -ex \
-	&& sed -i "s|.*/var/run/php5-fpm.sock|listen = 127.0.0.1:9000|g" /etc/php5/fpm/pool.d/www.conf \
+	&& sed -i "s|.*/var/run/php5-fpm.sock|listen = 0.0.0.0:9000|g" /etc/php5/fpm/pool.d/www.conf \
 	&& sed -i "s|;daemonize.*|daemonize = no|g" /etc/php5/fpm/php-fpm.conf
 
 
