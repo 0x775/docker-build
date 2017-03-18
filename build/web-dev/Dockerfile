@@ -7,13 +7,13 @@ ENV TIMEZONE	Asia/Shanghai
 # 更新软件源
 RUN echo "deb http://mirrors.163.com/debian/ jessie main non-free contrib" >/etc/apt/sources.list
 RUN echo "deb http://mirrors.163.com/debian/ jessie-updates main non-free contrib" >>/etc/apt/sources.list
-RUN echo "deb http://mirrors.163.com/debian/ jessie-backports main non-free contrib" >>/etc/apt/sources.list
+#RUN echo "deb http://mirrors.163.com/debian/ jessie-backports main non-free contrib" >>/etc/apt/sources.list
 RUN echo "deb-src http://mirrors.163.com/debian/ jessie main non-free contrib" >>/etc/apt/sources.list
 RUN echo "deb-src http://mirrors.163.com/debian/ jessie-updates main non-free contrib" >>/etc/apt/sources.list
-RUN echo "deb-src http://mirrors.163.com/debian/ jessie-backports main non-free contrib" >>/etc/apt/sources.list
+#RUN echo "deb-src http://mirrors.163.com/debian/ jessie-backports main non-free contrib" >>/etc/apt/sources.list
 RUN echo "deb http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib" >>/etc/apt/sources.list
 RUN echo "deb-src http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib" >>/etc/apt/sources.list
-RUN apt-get update && \
+RUN apt-get clean && apt-get update --fix-missing && \
 	cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
     echo "${TIMEZONE}" > /etc/timezone
 
@@ -28,7 +28,13 @@ RUN apt-get install -y --no-install-recommends \
 	php5-gd \
 	php5-mcrypt \
 	php5-mysql \
-	&& rm -rf /var/lib/apt/lists/*
+	nginx \
+    redis-server \
+    mysql-server
+
+
+#clean cache
+RUN rm -rf /var/lib/apt/lists/*
 
 
 # Set environments
